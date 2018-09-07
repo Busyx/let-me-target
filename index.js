@@ -93,7 +93,7 @@ module.exports = function LetMeTarget(dispatch) {
                     playerId: party.playerId,
                     cid: party.gameId,
                     online: party.online,
-                    hpP: party.online ? 100 : 0,
+                    hpP: party.online ? 1 : 0,
                     curHp: 0,
                     debuff: false,
                     debId: [],
@@ -125,7 +125,7 @@ module.exports = function LetMeTarget(dispatch) {
 
         for (let i = 0; i < partyMembers.length; i++) {
             if (partyMembers[i].playerId == event.playerId) {
-                partyMembers[i].hpP = Math.round(event.currentHp / event.maxHp * 100);
+                partyMembers[i].hpP = (event.currentHp / event.maxHp);
                 partyMembers[i].curHp = event.currentHp;
                 break;
             }
@@ -209,7 +209,7 @@ module.exports = function LetMeTarget(dispatch) {
             y: 99999999,
             z: 99999999,
             w: null,
-            hp: Math.round(event.curHp / event.maxHp * 100),
+            hp: (event.curHp / event.maxHp),
             dist: 100
         }
         if (bossInfo.length <= 0) {
@@ -217,7 +217,7 @@ module.exports = function LetMeTarget(dispatch) {
         } else {
             for (let b = 0; b < bossInfo.length; b++) {
                 if (bossInfo[b].id.equals(event.id)) {
-                    bossInfo[b].hp = Math.round(event.curHp / event.maxHp * 100);
+                    bossInfo[b].hp = (event.curHp / event.maxHp);
                     alreadyHaveBoss = true;
                     if (event.curHp <= 0) {
                         bossInfo = bossInfo.filter(function (p) {
@@ -275,7 +275,7 @@ module.exports = function LetMeTarget(dispatch) {
                 for (let i = 0; i < partyMembers.length; i++) {
 
                     let distance = checkDistance(ownX, ownY, ownZ, partyMembers[i].x, partyMembers[i].y, partyMembers[i].z);
-                    if (partyMembers[i].curHp > 0 && partyMembers[i].hpP < 100 && distance <= packetSkillInfo.dist && qtdTarget <= packetSkillInfo.targets) {
+                    if (partyMembers[i].curHp > 0 && partyMembers[i].hpP < 1 && distance <= packetSkillInfo.dist && qtdTarget <= packetSkillInfo.targets) {
                         let newEvent = {
                             target: partyMembers[i].cid,
                             unk: 0,
@@ -293,7 +293,7 @@ module.exports = function LetMeTarget(dispatch) {
                 for (let i = 0; i < partyMembers.length; i++) {
                     let distance = checkDistance(ownX, ownY, ownZ, partyMembers[i].x, partyMembers[i].y, partyMembers[i].z);
 
-                    if (partyMembers[i].curHp > 0 && partyMembers[i].hpP <= 100 && distance <= packetSkillInfo.dist && qtdTarget <= packetSkillInfo.targets) {
+                    if (partyMembers[i].curHp > 0 && partyMembers[i].hpP <= 1 && distance <= packetSkillInfo.dist && qtdTarget <= packetSkillInfo.targets) {
                         let newEvent = {
                             target: partyMembers[i].cid,
                             unk: 0,
