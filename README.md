@@ -1,6 +1,6 @@
 # let-me-target
 
-Version: 0.2.10
+Version: 0.2.12
 
 Auto-lockon module for Tera Proxy.
 
@@ -39,12 +39,3 @@ Still need a lot of tests. If you find any bug just let me know.
 /proxy autodps <num> (Change the delay before finish the skill)
 ```
 
- ## Last Update Fixes
- * Fixed Auto Skills if in group
- * Changed how the module handle skills
- * Added Ishara's Lullaby
-
- ## Planned
- * Configurable delay for every skill
- * Save configs chaged by command
- * Others

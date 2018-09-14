@@ -1,6 +1,6 @@
 /**
- * Version: 0.2.10
- * Made by Loggeru
+ * Version: 0.2.12
+ * Made by Loggeru, Updated by teralove
  */
 var fs = require('fs');
 
@@ -78,11 +78,11 @@ module.exports = function LetMeTarget(dispatch) {
         }
     });
 
-    dispatch.hook('S_SPAWN_ME', 2, event => {
+    dispatch.hook('S_SPAWN_ME', 3, event => {
         ownAlive = event.alive
     });
 
-    dispatch.hook('S_PARTY_MEMBER_LIST', 6, (event) => {
+    dispatch.hook('S_PARTY_MEMBER_LIST', 7, (event) => {
 
         partyMembers = [];
 
@@ -121,7 +121,7 @@ module.exports = function LetMeTarget(dispatch) {
 
     });
 
-    dispatch.hook('S_PARTY_MEMBER_CHANGE_HP', 3, (event) => {
+    dispatch.hook('S_PARTY_MEMBER_CHANGE_HP', 4, (event) => {
 
         for (let i = 0; i < partyMembers.length; i++) {
             if (partyMembers[i].playerId == event.playerId) {
@@ -144,7 +144,7 @@ module.exports = function LetMeTarget(dispatch) {
 
     });
 
-    dispatch.hook('S_USER_LOCATION', 4, { order: -10 }, (event) => {
+    dispatch.hook('S_USER_LOCATION', 5, { order: -10 }, (event) => {
 
         if (partyMembers != null) {
             for (let i = 0; i < partyMembers.length; i++) {
@@ -234,7 +234,7 @@ module.exports = function LetMeTarget(dispatch) {
 
     });
 
-    dispatch.hook('S_ACTION_STAGE', 4, { order: -10 }, (event) => {
+    dispatch.hook('S_ACTION_STAGE', 7, { order: -10 }, (event) => {
 
         if (bossInfo.length <= 0) return;
         for (let b = 0; b < bossInfo.length; b++) {
@@ -250,11 +250,10 @@ module.exports = function LetMeTarget(dispatch) {
 
     });
 
-    dispatch.hook('C_START_SKILL', 5, { order: -10 }, (event) => {
-        //message(event.skill);
+    dispatch.hook('C_START_SKILL', 7, { order: -10 }, (event) => {
         if (!enabled) return;
 
-        let skillInfo = getSkillInfo(event.skill);
+        let skillInfo = getSkillInfo(event.skill.id);
         let packetSkillInfo = skills.find(o => o.group == skillInfo.group && o.job == job);
         if (packetSkillInfo && skillInfo.sub == 10) {
             locking = false;
@@ -330,8 +329,8 @@ module.exports = function LetMeTarget(dispatch) {
         }
     });
 
-    dispatch.hook('C_CANCEL_SKILL', 1, { order: -10 }, (event) => {
-        let skillInfo = getSkillInfo(event.skill);
+    dispatch.hook('C_CANCEL_SKILL', 3, { order: -10 }, (event) => {
+        let skillInfo = getSkillInfo(event.skill.id);
         let packetSkillInfo = skills.find(o => o.group == skillInfo.group && o.job == job);
         if (packetSkillInfo && partyMembers != null) {
             locking = false;
@@ -340,7 +339,7 @@ module.exports = function LetMeTarget(dispatch) {
 
     function getSkillInfo(id) {
         // Thanks SP2
-        let nid = id -= 0x4000000;
+        let nid = id;// -= 0x4000000;
         return {
             id: nid,
             group: Math.floor(nid / 10000),
@@ -350,9 +349,9 @@ module.exports = function LetMeTarget(dispatch) {
     }
 
     function doSkillActivation(event) {
-        event.skill = (event.skill + 10);
+        event.skill.id = (event.skill.id + 10);
         setTimeout(function () {
-            dispatch.toServer('C_START_SKILL', 5, event);
+            dispatch.toServer('C_START_SKILL', 7, event);
             locking = false;
         }, autoDpsDelay);
     }
@@ -360,9 +359,9 @@ module.exports = function LetMeTarget(dispatch) {
     function doTimeOutLock(event) {
         setTimeout(function () {
             if (locking == true) {
-                dispatch.toServer('C_CAN_LOCKON_TARGET', 1, event);
+                dispatch.toServer('C_CAN_LOCKON_TARGET', 3, event);
                 setTimeout(function () {
-                    dispatch.toClient('S_CAN_LOCKON_TARGET', 1, Object.assign({ ok: true }, event));
+                    dispatch.toClient('S_CAN_LOCKON_TARGET', 3, Object.assign({ ok: true }, event));
                 }, 50);
             }
         }, lockDelay ? dRandom() : 20);
@@ -390,7 +389,7 @@ module.exports = function LetMeTarget(dispatch) {
 
     function message(msg, chat = false) {
         if (chat == true) {
-            command.message('(Let Me Target) ' + msg);
+            command.message(msg);
         } else {
             console.log('(Let Me Target) ' + msg);
         }
