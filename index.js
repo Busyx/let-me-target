@@ -361,7 +361,7 @@ module.exports = function LetMeTarget(dispatch) {
             if (locking == true) {
                 dispatch.toServer('C_CAN_LOCKON_TARGET', 3, event);
                 setTimeout(function () {
-                    dispatch.toClient('S_CAN_LOCKON_TARGET', 3, Object.assign({ ok: true }, event));
+                    dispatch.toClient('S_CAN_LOCKON_TARGET', 3, Object.assign({ success: true }, event));
                 }, 50);
             }
         }, lockDelay ? dRandom() : 20);
