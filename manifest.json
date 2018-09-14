@@ -1,0 +1,34 @@
+{
+  "files": {
+    "config.json": {
+        "overwrite": false,
+        "hash": "c8cb7febbe3688fbd9b10735f99de6473fd0cc2b0ff01ff2c9d2016f6b05ef86"
+    },
+    "skills.js": {
+        "overwrite": false,
+        "hash": "caed02a7103fd7d529305e737994aa25a63e33814b236a466e6073160ee57a4e"
+    },
+    "index.js": "0100dea282bb292a1d5448aabaa34848801840c1fd6722b6f509f21b6af560f8",
+    "module.json": "e9096c84fa7502bc3c05baac68cc6fec08bc47b9142ed8074686798f1739a69d",
+    "README.MD": "681f0b7dadaf7cabb8b8b0053bf0a578136417a8e7c16ef74b263e446c44c2fc"
+  },
+  "defs": {
+    "S_LOGIN": 10,
+    "S_SPAWN_ME": 3,
+    "S_PARTY_MEMBER_LIST": 7,
+    "S_LEAVE_PARTY": 1,
+    "S_LEAVE_PARTY_MEMBER": 2,    
+    "S_PARTY_MEMBER_CHANGE_HP": 4,    
+    "S_LOGOUT_PARTY_MEMBER": 1,
+    "S_USER_LOCATION": 3,
+    "S_ABNORMALITY_BEGIN": 2,
+    "S_ABNORMALITY_END": 1,
+    "S_BOSS_GAGE_INFO": 3,
+    "S_ACTION_STAGE": 7,
+    "S_CAN_LOCKON_TARGET": 3,        
+    "C_PLAYER_LOCATION": 5,    
+    "C_START_SKILL": 7,    
+    "C_CANCEL_SKILL": 3,    
+    "C_CAN_LOCKON_TARGET": 3
+  }
+}
