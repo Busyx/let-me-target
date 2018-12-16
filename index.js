@@ -1,15 +1,13 @@
 /**
- * Version: 0.2.12
+ * Version: 0.2.13
  * Made by Loggeru, Updated by teralove
  */
 var fs = require('fs');
 
 const skills = require('./skills'),
-    config = require('./config.json'),
-    Command = require('command');
+    config = require('./config.json');
 
 module.exports = function LetMeTarget(dispatch) {
-    const command = Command(dispatch);
 
     let enabled = true,
         ownId = null,
@@ -38,19 +36,19 @@ module.exports = function LetMeTarget(dispatch) {
         job = (model - 10101) % 100;
     });
 
-    command.add('letmelock', () => {
+    dispatch.command.add('letmelock', () => {
         enabled = !enabled;
         let txt = (enabled) ? 'ENABLED' : 'DISABLED';
         message('Let me Lock is ' + txt, true);
     });
 
-    command.add('lockhuman', () => {
+    dispatch.command.add('lockhuman', () => {
         lockDelay = !lockDelay;
         let txt = (lockDelay) ? 'ENABLED' : 'DISABLED';
         message('Human Behavior is ' + txt, true);
     });
 
-    command.add('smartc', () => {
+    dispatch.command.add('smartc', () => {
         smartC = !smartC;
         let txt = (smartC) ? 'ENABLED' : 'DISABLED';
         message('Smart Cleanse is ' + txt, true);
@@ -66,7 +64,7 @@ module.exports = function LetMeTarget(dispatch) {
         message(JSON.stringify(partyMembers, null, 4));
     });*/
 
-    command.add('autodps', (v1) => {
+    dispatch.command.add('autodps', (v1) => {
         if (v1 != null) {
             v1 = parseInt(v1);
             autoDpsDelay = v1;
@@ -125,7 +123,7 @@ module.exports = function LetMeTarget(dispatch) {
 
         for (let i = 0; i < partyMembers.length; i++) {
             if (partyMembers[i].playerId == event.playerId) {
-                partyMembers[i].hpP = (event.currentHp / event.maxHp);
+                partyMembers[i].hpP = (Number(event.currentHp) / Number(event.maxHp));
                 partyMembers[i].curHp = event.currentHp;
                 break;
             }
@@ -148,7 +146,7 @@ module.exports = function LetMeTarget(dispatch) {
 
         if (partyMembers != null) {
             for (let i = 0; i < partyMembers.length; i++) {
-                if (partyMembers[i].cid.equals(event.gameId)) {
+                if (partyMembers[i].cid == (event.gameId)) {
                     partyMembers[i].x = (event.loc.x + event.dest.x) / 2;
                     partyMembers[i].y = (event.loc.y + event.dest.y) / 2;
                     partyMembers[i].z = (event.loc.z + event.dest.z) / 2;
@@ -165,14 +163,14 @@ module.exports = function LetMeTarget(dispatch) {
         ownZ = (event.loc.z + event.dest.z) / 2;
     });
 
-    dispatch.hook('S_ABNORMALITY_BEGIN', 2, { order: -10 }, (event) => {
-        if (event.source.low == 0 || event.source.high == 0 || event.target.equals(event.source) || partyMembers == null || event.source.equals(cid)) return;
+    dispatch.hook('S_ABNORMALITY_BEGIN', 3, { order: -10 }, (event) => {
+        if (event.source.low == 0 || event.source.high == 0 || event.target == (event.source) || partyMembers == null || event.source == (cid)) return;
         for (let y = 0; y < partyMembers.length; y++) {
-            if (partyMembers[y].cid.equals(event.source)) return;
+            if (partyMembers[y].cid == (event.source)) return;
         }
 
         for (let i = 0; i < partyMembers.length; i++) {
-            if (partyMembers[i].cid.equals(event.target)) {
+            if (partyMembers[i].cid == (event.target)) {
                 partyMembers[i].debuff = true;
                 partyMembers[i].debId.push(event.id);
                 break;
@@ -185,7 +183,7 @@ module.exports = function LetMeTarget(dispatch) {
         if (partyMembers == null) return
 
         for (let i = 0; i < partyMembers.length; i++) {
-            if (partyMembers[i].cid.equals(event.target)) {
+            if (partyMembers[i].cid == (event.target)) {
 
                 let newDebId = [];
                 for (let x = 0; x < partyMembers[i].debId.length; x++) {
@@ -209,19 +207,19 @@ module.exports = function LetMeTarget(dispatch) {
             y: 99999999,
             z: 99999999,
             w: null,
-            hp: (event.curHp / event.maxHp),
+            hp: (Number(event.curHp) / Number(event.maxHp)),
             dist: 100
         }
         if (bossInfo.length <= 0) {
             bossInfo.push(tempPushEvent);
         } else {
             for (let b = 0; b < bossInfo.length; b++) {
-                if (bossInfo[b].id.equals(event.id)) {
-                    bossInfo[b].hp = (event.curHp / event.maxHp);
+                if (bossInfo[b].id == (event.id)) {
+                    bossInfo[b].hp = (Number(event.curHp) / Number(event.maxHp));
                     alreadyHaveBoss = true;
                     if (event.curHp <= 0) {
                         bossInfo = bossInfo.filter(function (p) {
-                            return !p.id.equals(event.id);
+                            return !p.id == (event.id);
                         });
                     }
                     break;
@@ -234,11 +232,11 @@ module.exports = function LetMeTarget(dispatch) {
 
     });
 
-    dispatch.hook('S_ACTION_STAGE', 7, { order: -10 }, (event) => {
+    dispatch.hook('S_ACTION_STAGE', 9, { order: -10 }, (event) => {
 
         if (bossInfo.length <= 0) return;
         for (let b = 0; b < bossInfo.length; b++) {
-            if (event.gameId.equals(bossInfo[b].id)) {
+            if (event.gameId == (bossInfo[b].id)) {
                 bossInfo[b].x = event.loc.x;
                 bossInfo[b].y = event.loc.y;
                 bossInfo[b].z = event.loc.z;
@@ -389,7 +387,7 @@ module.exports = function LetMeTarget(dispatch) {
 
     function message(msg, chat = false) {
         if (chat == true) {
-            command.message(msg);
+            dispatch.command.message(msg);
         } else {
             console.log('(Let Me Target) ' + msg);
         }

@@ -1,14 +1,11 @@
 # let-me-target
 
-Version: 0.2.12
+Version: 0.2.13
 
-Auto-lockon module for Tera Proxy.
+Auto-lockon module.
 
-Still need a lot of tests. If you find any bug just let me know.
 
-**Need _Command_ module by Pinkie to work.**
-
-## Done
+## Info
  * Auto-lock members from the lowest to highest HP
     * Priest and Mystic basic heal
     * Healing Immersion
@@ -30,12 +27,11 @@ Still need a lot of tests. If you find any bug just let me know.
  * Config file: "config.json"
 
  ## Commands
- **Need to be used in _Proxy Channel_ (/proxy)**
 ```
-/proxy letmelock (Toggle the module on/off)
-/proxy lockhuman (Toggle human behavior on/off)
-/proxy smartc (Toggle smart cleanse on/off)
-/proxy autodps (Toggle auto finish skill on/off)
-/proxy autodps <num> (Change the delay before finish the skill)
+/8 letmelock (Toggle the module on/off)
+/8 lockhuman (Toggle human behavior on/off)
+/8 smartc (Toggle smart cleanse on/off)
+/8 autodps (Toggle auto finish skill on/off)
+/8 autodps <num> (Change the delay before finish the skill)
 ```
 

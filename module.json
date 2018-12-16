@@ -1,5 +1,12 @@
 {
     "disableAutoUpdate": false,
+    "name": "let-me-target",
+    "author": "loggeru, teralove",
+    "description": "Auto-lockon module.",
+    "options": {
+        "niceName": "Let Me Target"
+    },
+    "version": "0.2.13",
     "servers": ["https://raw.githubusercontent.com/teralove/let-me-target/master/"],
     "supportUrl": "https://github.com/teralove/let-me-target/issues"
 }
