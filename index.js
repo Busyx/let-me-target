@@ -164,7 +164,7 @@ module.exports = function LetMeTarget(dispatch) {
     });
 
     dispatch.hook('S_ABNORMALITY_BEGIN', 3, { order: -10 }, (event) => {
-        if (event.source.low == 0 || event.source.high == 0 || event.target == (event.source) || partyMembers == null || event.source == (cid)) return;
+        if (event.source == 0 || event.target == (event.source) || partyMembers == null || event.source == (cid)) return;
         for (let y = 0; y < partyMembers.length; y++) {
             if (partyMembers[y].cid == (event.source)) return;
         }
